@@ -27,9 +27,10 @@
 		user_repo = "",
 		tracker = "",
 		token = "",
+		config;
 
-		// Initialize config file
-		config = JSON.parse( fs.readFileSync( __dirname + "/config.json" ) );
+	// Initialize config file	
+	initConfig();
 
 	// We don't want the default prompt message
 	prompt.message = "";
@@ -328,6 +329,13 @@
 		}
 
 		process.exit( 1 );
+	}
+	
+	function initConfig() {
+		config = JSON.parse( fs.readFileSync( __dirname + "/config.json" ) );
+		
+		//Default to upstream if no remote is set
+		config.remote = typeof config.remote !== 'undefined' ? config.remote : 'upstream';
 	}
 
 })();
